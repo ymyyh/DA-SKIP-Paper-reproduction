@@ -35,8 +35,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="PyTorch implementation of paper 'A Dual-Stage Attention-Based Recurrent Neural Network for Time Series Prediction'")
 
     # Dataset setting
-    # parser.add_argument('--dataroot', type=str, default="../nasdaq/nasdaq100_padding.csv", help='path to dataset')
-    parser.add_argument('--dataroot', type=str, default="./src/data/electricity.txt", help='path to dataset')
+    parser.add_argument('--dataroot', type=str, default="./data/electricity.txt", help='path to dataset')
     parser.add_argument('--batchsize', type=int, default=512, help='input batch size [128]')
 
     # Encoder / Decoder parameters setting
@@ -49,7 +48,7 @@ def parse_args():
     parser.add_argument('--lr', type=list, default=[0.08], help='learning rate [0.001] reduced by 0.1 after each 10000 iterations')
     parser.add_argument('--decay_rate', type=list, default=[0.8], help='learning rate [0.001] reduced by 0.1 after each 10000 iterations')
     
-    parser.add_argument('--data', type=str, required=False,default='./src/data/electricity.txt', help='location of the data file')
+    parser.add_argument('--data', type=str, required=False,default='./data/electricity.txt', help='location of the data file')
     parser.add_argument('--normalize', type=int, default=3)
     parser.add_argument('--horizon', type=int, default=1)
     parser.add_argument('--skipwindow', type=int, default= 24 * 4 * 30 - 1, help='skip window size')
@@ -57,8 +56,8 @@ def parse_args():
     parser.add_argument('--index', type=int, default=320)
     parser.add_argument('--circle_length', type=int, default=24 * 4)
     parser.add_argument('--cuda', type=str, default=False)
-    parser.add_argument('--save_1', type=str, default="./src/encoder_save/encoder.pt", help='path to save encoder')
-    parser.add_argument('--save_2', type=str, default="./src/decoder_save/decoder_pt", help='path to save decoder')
+    parser.add_argument('--save_1', type=str, default="./encoder_save/encoder.pt", help='path to save encoder')
+    parser.add_argument('--save_2', type=str, default="./decoder_save/decoder_pt", help='path to save decoder')
 
 
 
@@ -107,19 +106,19 @@ def main():
 
           fig1 = plt.figure(figsize=(10,8))
           plt.semilogy(range(len(model.iter_losses)), model.iter_losses)
-          plt.savefig(('./src/pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_1.png'))
+          plt.savefig(('./pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_1.png'))
           plt.close(fig1)
 
           fig2 = plt.figure(figsize=(10,8))
           plt.semilogy(range(len(model.epoch_losses)), model.epoch_losses)
-          plt.savefig(('./src/pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_2.png'))
+          plt.savefig(('./pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_2.png'))
           plt.close(fig2)
 
           fig3 = plt.figure(figsize=(10,8))
           plt.plot(y_pred, label='Predicted')
           plt.plot(Data.dat[-y_pred.shape[0]:,args.index], label="True")
           plt.legend(loc='upper left')
-          plt.savefig(('./src/pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_3.png'))
+          plt.savefig(('./pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_3.png'))
           plt.close(fig3)
           print('Finished Training')
 
@@ -127,7 +126,7 @@ def main():
           plt.plot(y_pred[-1000:], label='Predicted')
           plt.plot(Data.dat[-1000:,args.index], label="True")
           plt.legend(loc='upper left')
-          plt.savefig(('./src/pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_4.png'))
+          plt.savefig(('./pic_save/' + 'electricity_learing_rate=' + str(epoch_lr) + '_decay_rate=' + str(decay_rate) + '_nhidden_encoder_=_' + str(args.nhidden_encoder) + '_iter_4.png'))
           plt.close(fig4)
           print('Finished Training')
 
